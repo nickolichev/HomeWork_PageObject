@@ -124,7 +124,7 @@ public class TransferTest {
     // Предпологаю, что в Appveyor CI Assertions начинает проверку не дождавшись элемента
     // TransferTest > testInvalidFirstCardNumberPayment() FAILED org.opentest4j.AssertionFailedError:
     // expected: <Ошибка! Произошла ошибка> but was: <>
-//    TransferPage.waitAppearElement();
+    TransferPage.waitAppearElement();
     Assertions.assertEquals(errorOccurred, getErrorNotification());
   }
 
@@ -141,7 +141,7 @@ public class TransferTest {
     // Предпологаю, что в Appveyor CI Assertions начинает проверку не дождавшись элемента
     // TransferTest > testInvalidSecondCardNumberPayment() FAILED org.opentest4j.AssertionFailedError:
     // expected: <Ошибка! Произошла ошибка> but was: <>
-//    TransferPage.waitAppearElement();
+    TransferPage.waitAppearElement();
     Assertions.assertEquals(errorOccurred, getErrorNotification());
   }
 
