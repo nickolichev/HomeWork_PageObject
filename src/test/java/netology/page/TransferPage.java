@@ -5,7 +5,6 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.Data;
 import netology.data.DataHelper;
 import org.openqa.selenium.Keys;
-import netology.data.DataHelper;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static netology.data.DataHelper.AmountAndBalanceInfo.*;

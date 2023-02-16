@@ -51,11 +51,9 @@ public class TransferTest {
     transferPage.clearFormFields();
     transferPage.transferFromFirstCard();
     transferPage.updatedCardBalance();
-
     DashboardPage.ActualBalanceFirstCard actualBalanceFirstCard = new DashboardPage.ActualBalanceFirstCard();
     DashboardPage.ActualBalanceSecondCard actualBalanceSecondCard = new DashboardPage.ActualBalanceSecondCard();
     DataHelper.AmountAndBalanceInfo amountAndBalanceInfo = new DataHelper.AmountAndBalanceInfo();
-
     Assertions.assertEquals(Integer.toString(amountAndBalanceInfo.balanceAfterPaymentFromFirstCard()), Integer.toString(actualBalanceFirstCard.getBalanceFirstCard()));
     Assertions.assertEquals(Integer.toString(amountAndBalanceInfo.balanceAfterPaymentToSecondCard()), Integer.toString(actualBalanceSecondCard.getBalanceSecondCard()));
 
@@ -71,7 +69,6 @@ public class TransferTest {
     transferPage.clearFormFields();
     transferPage.transferFromSecondCard();
     transferPage.updatedCardBalance();
-
     Assertions.assertEquals(Integer.toString(amountAndBalanceInfo.balanceAfterPaymentFromSecondCard()), Integer.toString(actualBalanceSecondCard.getBalanceSecondCard()));
     Assertions.assertEquals(Integer.toString(amountAndBalanceInfo.balanceAfterPaymentToFirstCard()), Integer.toString(actualBalanceFirstCard.getBalanceFirstCard()));
   }
@@ -82,7 +79,6 @@ public class TransferTest {
   public void testInvalidLoginPasswordCombination() {
     loginPage.invalidLogin();
     loginPage.invalidPassword();
-
     Assertions.assertEquals(errorLoginOrPassword, getNotificationErrorLogin());
     Assertions.assertEquals(errorLoginOrPassword, getNotificationErrorPassword());
   }
@@ -92,7 +88,6 @@ public class TransferTest {
   @Test
   public void testBlankLoginAndPassword() {
     loginPage.cleanFieldsLoginPassword();
-
     Assertions.assertEquals(errorField, getNotificationFieldLogin());
     Assertions.assertEquals(errorField, getNotificationFieldPassword());
   }
@@ -103,10 +98,6 @@ public class TransferTest {
   public void testInvalidCode() {
     loginPage.validAuth();
     verificationPage.invalidCode();
-    // без вызова .waitAppearElement() падает в Appveyor CI (в локальной сборке - стабильно проходит)
-    // Предпологаю, что в Appveyor CI Assertions начинает проверку не дождавшись элемента
-    // "TransferTest > testInvalidCode() FAILED org.opentest4j.AssertionFailedError:
-    // expected: <Ошибка! Неверно указан код! Попробуйте ещё раз.> but was: <>"
     VerificationPage.waitAppearElement();
     Assertions.assertEquals(errorCode, getNotificationErrorCode());
   }
@@ -120,10 +111,6 @@ public class TransferTest {
     DashboardPage dashboardPage = new DashboardPage();
     dashboardPage.secondCardTopUp();
     transferPage.transferFromInvalidFirstCard();
-    // без вызова .waitForOneSeconds() падает в Appveyor CI (в локальной сборке - стабильно проходит)
-    // Предпологаю, что в Appveyor CI Assertions начинает проверку не дождавшись элемента
-    // TransferTest > testInvalidFirstCardNumberPayment() FAILED org.opentest4j.AssertionFailedError:
-    // expected: <Ошибка! Произошла ошибка> but was: <>
     TransferPage.waitAppearElement();
     Assertions.assertEquals(errorOccurred, getErrorNotification());
   }
@@ -137,15 +124,11 @@ public class TransferTest {
     DashboardPage dashboardPage = new DashboardPage();
     dashboardPage.firstCardTopUp();
     transferPage.transferFromInvalidSecondCard();
-    // без вызова .waitForOneSeconds() падает в Appveyor CI (в локальной сборке - стабильно проходит)
-    // Предпологаю, что в Appveyor CI Assertions начинает проверку не дождавшись элемента
-    // TransferTest > testInvalidSecondCardNumberPayment() FAILED org.opentest4j.AssertionFailedError:
-    // expected: <Ошибка! Произошла ошибка> but was: <>
     TransferPage.waitAppearElement();
     Assertions.assertEquals(errorOccurred, getErrorNotification());
   }
 
-  // Баг. Этот тест должен был бы упасть. Оформлено issue
+  // Баг. Не выдает ошибку о невозможности перевода. Оформлено issue
   // Тестируем оплату с 1-й карты на 1-ю карту
   @Order(7)
   @Test
@@ -155,9 +138,6 @@ public class TransferTest {
     DashboardPage dashboardPage = new DashboardPage();
     dashboardPage.firstCardTopUp();
     transferPage.transferFromFirstCard();
-
-    // Корректный текст в expected должен быть примерно такой: "Ошибка! Указанный номер карты не может быть использован",
-    // и в этом случае (с данным текстом) настоящий тест должен был бы упасть
     Assertions.assertEquals(yourCards, getHeading());
   }
 
@@ -171,9 +151,6 @@ public class TransferTest {
     DashboardPage dashboardPage = new DashboardPage();
     dashboardPage.secondCardTopUp();
     transferPage.transferFromSecondCard();
-
-    // Корректный текст в expected должен быть примерно такой: "Ошибка! Указанный номер карты не может быть использован",
-    // и в этом случае (с данным текстом) настоящий тест должен был бы упасть
     Assertions.assertEquals(yourCards, getHeading());
   }
 
@@ -187,9 +164,6 @@ public class TransferTest {
     DashboardPage dashboardPage = new DashboardPage();
     dashboardPage.secondCardTopUp();
     transferPage.transferFromFirstCardWithEmptyAmountField();
-
-    // Корректный текст expected должен быть: "Поле обязательно для заполнения",
-    // и в этом случае (с данным текстом) настоящий тест должен был бы упасть
     Assertions.assertEquals(yourCards, getHeading());
   }
 
@@ -203,9 +177,6 @@ public class TransferTest {
     DashboardPage dashboardPage = new DashboardPage();
     dashboardPage.firstCardTopUp();
     transferPage.transferFromSecondCardWithEmptyAmountField();
-
-    // Корректный текст expected должен быть: "Поле обязательно для заполнения",
-    // и в этом случае (с данным текстом) настоящий тест должен был бы упасть
     Assertions.assertEquals(yourCards, getHeading());
   }
 
@@ -218,7 +189,6 @@ public class TransferTest {
     DashboardPage dashboardPage = new DashboardPage();
     dashboardPage.secondCardTopUp();
     transferPage.transferCancelButton();
-
     Assertions.assertEquals(yourCards, getHeading());
   }
 
@@ -234,14 +204,11 @@ public class TransferTest {
     transferPage.clearFormFields();
     transferPage.transferFromFirstCardPaymentOverBalance();
     transferPage.updatedCardBalance();
-
     DashboardPage.ActualBalanceFirstCard actualBalanceFirstCard = new DashboardPage.ActualBalanceFirstCard();
     DashboardPage.ActualBalanceSecondCard actualBalanceSecondCard = new DashboardPage.ActualBalanceSecondCard();
     DataHelper.AmountAndBalanceInfo amountAndBalanceInfo = new DataHelper.AmountAndBalanceInfo();
-
     Assertions.assertEquals(amountAndBalanceInfo.balanceAfterOverLimitPaymentFromFirstCard(),
             Integer.toString(actualBalanceFirstCard.getBalanceFirstCard()));
-
     Assertions.assertEquals(amountAndBalanceInfo.balanceAfterOverLimitPaymentToSecondCard(),
             Integer.toString(actualBalanceSecondCard.getBalanceSecondCard()));
 
@@ -271,11 +238,9 @@ public class TransferTest {
     transferPage.clearFormFields();
     transferPage.transferFromSecondCardPaymentOverBalance();
     transferPage.updatedCardBalance();
-
     DataHelper.AmountAndBalanceInfo amountAndBalanceInfo = new DataHelper.AmountAndBalanceInfo();
     DashboardPage.ActualBalanceFirstCard actualBalanceFirstCard = new DashboardPage.ActualBalanceFirstCard();
     DashboardPage.ActualBalanceSecondCard actualBalanceSecondCard = new DashboardPage.ActualBalanceSecondCard();
-
     Assertions.assertEquals(amountAndBalanceInfo.balanceAfterOverLimitPaymentFromSecondCard(),
             Integer.toString(actualBalanceSecondCard.getBalanceSecondCard()));
     Assertions.assertEquals(amountAndBalanceInfo.balanceAfterOverLimitPaymentToFirstCard(),
@@ -302,7 +267,6 @@ public class TransferTest {
   public void testBlankVerificationCode() {
     loginPage.validAuth();
     verificationPage.emptyFieldCode();
-
     Assertions.assertEquals(errorField, getNotificationFieldVerifyCode());
   }
 
@@ -311,22 +275,18 @@ public class TransferTest {
   @Test
   public void testBlockedAccountAfterFourthInvalidVerificationCodeAttempt() {
     loginPage.validAuth();
-
     // 1-я попытка ввода невалидного смс кода
     verificationPage.invalidCode();
     Assertions.assertEquals(errorCode, getNotificationErrorCode());
     verificationPage.clearFormFields();
-
     // 2-я попытка ввода невалидного смс кода
     verificationPage.invalidCode();
     Assertions.assertEquals(errorCode, getNotificationErrorCode());
     verificationPage.clearFormFields();
-
     // 3-я попытка ввода невалидного смс кода
     verificationPage.invalidCode();
     Assertions.assertEquals(errorCode, getNotificationErrorCode());
     verificationPage.clearFormFields();
-
     // 4-я попытка ввода невалидного смс кода
     verificationPage.invalidCode();
     Assertions.assertEquals(CodeFourthAttempt, getNotificationErrorCode());

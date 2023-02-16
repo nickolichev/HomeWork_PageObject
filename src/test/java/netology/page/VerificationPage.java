@@ -14,7 +14,6 @@ import static netology.data.DataHelper.CodeInfo.*;
 
 @Data
 public class VerificationPage {
-//  private static SelenideElement verificationPage = $x("//*[@id='root']/div/h2");
   private static SelenideElement buttonContinue = $x("//*[@id='root']/div/div/form/fieldset/div[2]/button/span/span");
   private static SelenideElement notificationErrorCode = $x("//*[@id='root']/div/div/div/div[3]");
   private static SelenideElement notificationErrorCodeFour = $x("//*[@id='root']/div/div/div/div[3]");

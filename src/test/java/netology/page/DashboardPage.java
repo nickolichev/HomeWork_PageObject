@@ -28,7 +28,6 @@ public class DashboardPage {
     public ActualBalanceFirstCard(SelenideElement elementBalanceFirstCard) {
       String balanceFirstCard = elementBalanceFirstCard.getText()
               .substring(29, elementBalanceFirstCard.getText().indexOf(" ", 29));
-
       balanceFirstCardString = balanceFirstCard;
       balanceFirstCardInt = Integer.parseInt(balanceFirstCard);
     }
@@ -53,7 +52,6 @@ public class DashboardPage {
     public ActualBalanceSecondCard(SelenideElement elementBalanceSecondCard) {
       String balanceSecondCard = elementBalanceSecondCard.getText()
               .substring(29, elementBalanceSecondCard.getText().indexOf(" ", 29));
-
       balanceSecondCardString = balanceSecondCard;
       balanceSecondCardInt = Integer.parseInt(balanceSecondCard);
     }

@@ -88,7 +88,7 @@ public class DataHelper {
     }
 
     private static boolean checkRandomCardNumber(String card) {
-      return !card.contains(firstCard) && !card.contains(secondCard);
+      return !card.equals(firstCard) && !card.equals(secondCard);
     }
   }
 
